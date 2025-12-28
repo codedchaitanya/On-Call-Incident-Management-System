@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Incident Dashboard - On-Call IMS{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+        <h2 class="text-3xl font-bold text-gray-900">Incident Dashboard</h2>
+        <a href="/trigger" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium">
+            + Trigger Incident
+        </a>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white rounded-lg shadow p-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Status</label>
+                <select id="statusFilter" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    <option value="">All Statuses</option>
+                    <option value="TRIGGERED">Triggered</option>
+                    <option value="ACKNOWLEDGED">Acknowledged</option>
+                    <option value="ESCALATED">Escalated</option>
+                    <option value="RESOLVED">Resolved</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Service</label>
+                <input type="text" id="serviceFilter" placeholder="Filter by service" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div class="flex items-end">
+                <button onclick="loadIncidents()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg w-full font-medium">
+                    Apply Filters
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incidents Table -->
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assigned To</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200" id="incidentsTableBody">
+                <tr class="text-center py-8"><td colspan="7" class="py-8 text-gray-500">Loading incidents...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Status Badge Modal -->
+<div id="statusModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full mx-4">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Update Incident Status</h3>
+        <input type="hidden" id="selectedIncidentId">
+        
+        <div class="space-y-3">
+            <button onclick="transitionIncident('acknowledge')" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium">
+                ✅ Acknowledge
+            </button>
+            <button onclick="transitionIncident('resolve')" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium">
+                ✔️ Resolve
+            </button>
+            <button onclick="transitionIncident('escalate')" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg font-medium">
+                ⚠️ Escalate
+            </button>
+            <button onclick="closeStatusModal()" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-900 px-4 py-2 rounded-lg font-medium">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Details Modal -->
+<div id="detailsModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold text-gray-900">Incident Details</h3>
+            <button onclick="closeDetailsModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        
+        <div id="detailsContent" class="space-y-4">
+            <!-- Filled by JavaScript -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/dashboard.js"></script>
+{% endblock %}

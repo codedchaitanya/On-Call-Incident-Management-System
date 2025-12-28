@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Metrics - On-Call IMS{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <h2 class="text-3xl font-bold text-gray-900">Incident Metrics</h2>
+
+    <!-- Filters -->
+    <div class="bg-white rounded-lg shadow p-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Service</label>
+                <input type="text" id="metricsService" placeholder="Leave empty for all services" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Start Date</label>
+                <input type="date" id="metricsStartDate" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">End Date</label>
+                <input type="date" id="metricsEndDate" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+        </div>
+        <div class="mt-4 flex gap-3">
+            <button onclick="loadMetrics()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">
+                Load Metrics
+            </button>
+            <button onclick="resetMetricsFilters()" class="bg-gray-300 hover:bg-gray-400 text-gray-900 px-6 py-2 rounded-lg font-medium">
+                Reset
+            </button>
+        </div>
+    </div>
+
+    <!-- Metrics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium mb-2">Mean Time To Acknowledge (MTTA)</p>
+            <p class="text-3xl font-bold text-gray-900" id="mttaValue">-</p>
+            <p class="text-gray-500 text-xs mt-2">Minutes on average</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium mb-2">Mean Time To Resolve (MTTR)</p>
+            <p class="text-3xl font-bold text-gray-900" id="mttrValue">-</p>
+            <p class="text-gray-500 text-xs mt-2">Minutes on average</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium mb-2">Total Incidents</p>
+            <p class="text-3xl font-bold text-gray-900" id="totalIncidentsValue">-</p>
+            <p class="text-gray-500 text-xs mt-2">Resolved incidents</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium mb-2">Avg Response Time</p>
+            <p class="text-3xl font-bold text-gray-900" id="avgResponseValue">-</p>
+            <p class="text-gray-500 text-xs mt-2">First response time</p>
+        </div>
+    </div>
+
+    <!-- Incident Timeline -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Recent Incidents</h3>
+        <div id="incidentTimelineContainer" class="space-y-4">
+            <p class="text-gray-500">Load metrics to see recent incidents</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/metrics.js"></script>
+{% endblock %}
