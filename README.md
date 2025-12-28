@@ -68,6 +68,16 @@ This project implements exactly that—nothing more, nothing less.
 
 **Key Decision**: No business logic in JS. All state validation happens server-side.
 
+#### Frontend screenshots
+
+Incident Dashboard: ![Incident Dashboard](incidents/Images/Incident Dashboard.jpeg)
+
+Incident Triggered: ![Incident Triggered](incidents/Images/Incident Triggered.png)
+
+On-Call Schedule: ![Schedule](incidents/Images/Schedule.jpeg)
+
+Metrics: ![Metrics](incidents/Images/Metrics.jpeg)
+
 
 ### Alerts (Console Only)
 
@@ -75,6 +85,8 @@ Alerts print to stdout when:
 - Incident triggered: `🚨 ALERT 🚨 Service: X, Incident ID: Y, Assigned To: Z`
 - Incident acknowledged: `✅ Incident acknowledged`
 - Incident escalated: `⚠️ INCIDENT ESCALATED`
+
+![Alert](incidents/Images/Alert.jpeg)
 
 In production, these would be HTTP POST calls to Slack/PagerDuty APIs. Here, they're console logs + UI toast notifications.
 
@@ -98,6 +110,8 @@ In production, these would be HTTP POST calls to Slack/PagerDuty APIs. Here, the
 - Schedule crossing midnight: Handled via simple datetime comparison (not date boundaries)
 - Overlapping schedules: Override flag breaks ties deterministically
 - No on-call user: Incident created but unassigned; UI shows "UNASSIGNED"
+
+![No on-call user](incidents/Images/No on call user.png)
 
 ### 2. Incident Triggering
 
@@ -152,6 +166,10 @@ For each incident where status=TRIGGERED:
 
 **User Reassignment**: No longer reassigns to escalation user (removed for simplicity). Escalation is now a flag indicating "unhandled for too long."
 
+⚠️ Escalation example: ![Incident Escalated](incidents/Images/Incident Escalated.jpeg)
+
+❌ Missing escalation path: ![No escalation path defined](incidents/Images/No escalation path defined.png)
+
 ### 5. Incident Deduplication
 
 **Mechanism**: Before creating incident, query for existing within 5-min window.
@@ -165,6 +183,8 @@ WHERE service_name = X
 ```
 
 **Return**: If found, return existing; else create new.
+
+![Duplicate detected](incidents/Images/Duplicate Detected.jpeg)
 
 ### 6. Metrics
 
