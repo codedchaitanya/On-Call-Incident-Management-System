@@ -57,7 +57,7 @@ This project implements exactly that—nothing more, nothing less.
 
 **Key Design Decision**: All business logic lives in services, not views. Views are dumb request/response handlers.
 
-### Frontend (HTML + Tailwind + Vanilla JS)
+### Frontend (HTML + Tailwind CSS + Vanilla JS)
 
 **Responsibility**: Display incidents, allow state transitions, poll for updates.
 
