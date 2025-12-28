@@ -70,9 +70,9 @@ This project implements exactly that—nothing more, nothing less.
 
 #### Frontend screenshots
 
-Incident Dashboard: ![Incident Dashboard](incidents/Images/Incident Dashboard.jpeg)
+Incident Dashboard: ![Incident Dashboard](incidents/Images/Incident%20Dashboard.jpeg)
 
-Incident Triggered: ![Incident Triggered](incidents/Images/Incident Triggered.png)
+Incident Triggered: ![Incident Triggered](incidents/Images/Incident%20Triggered.png)
 
 On-Call Schedule: ![Schedule](incidents/Images/Schedule.jpeg)
 
@@ -111,7 +111,7 @@ In production, these would be HTTP POST calls to Slack/PagerDuty APIs. Here, the
 - Overlapping schedules: Override flag breaks ties deterministically
 - No on-call user: Incident created but unassigned; UI shows "UNASSIGNED"
 
-![No on-call user](incidents/Images/No on call user.png)
+![No on-call user](incidents/Images/No%20on%20call%20user.png)
 
 ### 2. Incident Triggering
 
@@ -166,9 +166,9 @@ For each incident where status=TRIGGERED:
 
 **User Reassignment**: No longer reassigns to escalation user (removed for simplicity). Escalation is now a flag indicating "unhandled for too long."
 
-⚠️ Escalation example: ![Incident Escalated](incidents/Images/Incident Escalated.jpeg)
+⚠️ Escalation example: ![Incident Escalated](incidents/Images/Incident%20Escalated.jpeg)
 
-❌ Missing escalation path: ![No escalation path defined](incidents/Images/No escalation path defined.png)
+❌ Missing escalation path: ![No escalation path defined](incidents/Images/No%20escalation%20path%20defined.png)
 
 ### 5. Incident Deduplication
 
@@ -184,7 +184,7 @@ WHERE service_name = X
 
 **Return**: If found, return existing; else create new.
 
-![Duplicate detected](incidents/Images/Duplicate Detected.jpeg)
+![Duplicate detected](incidents/Images/Duplicate%20Detected.jpeg)
 
 ### 6. Metrics
 
